@@ -1,27 +1,10 @@
-from langchain_google_genai import GoogleGenerativeAI, GoogleGenerativeAIEmbeddings
-from dotenv import load_dotenv
-from langchain.schema import SystemMessage, AIMessage, HumanMessage
-from langchain.schema.runnable import RunnableLambda, RunnableSequence
+from rag_system.rag_db_create import create_vec_db
+from rag_system.rag_retrive import retrive_answer
+import os
 
-load_dotenv()
-
-llm = GoogleGenerativeAI(model="gemini-2.5-flash")
-
-chat_history=[]
-system_message = SystemMessage(content="You are a helpful AI assistant")
-chat_history.append(system_message)
-
-while True:
-    query = input("You : ")
-    if query.lower() == "exit":
-        break
-    chat_history.append(HumanMessage(content=query))
-    result = llm.invoke(chat_history)
-    chat_history.append(AIMessage(content=result))
-    print("AI :"+result)
-
-print("the AI is offline now.")
-embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-print(embeddings.embed_query("hello, world!"))
-
-    
+if __name__ == "__main__":
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    create_vec_db(current_dir)
+    query = input("enter your query releted to harry potter")
+    response = retrive_answer(query, current_dir)
+    print(response)
