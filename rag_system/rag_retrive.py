@@ -7,7 +7,9 @@ from dotenv import load_dotenv
 import os
 load_dotenv()
 
-def retrive_answer(user_inputs, current_dir):
+def retrive_answer(user_inputs):
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+
     persistent_path = os.path.join(current_dir, "chroma_db")
 
     llm = GoogleGenerativeAI(model="gemini-2.5-pro")

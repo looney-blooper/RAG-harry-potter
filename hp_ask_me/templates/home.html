@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Harry Potter RAG Chat</title>
+</head>
+<body>
+    <h2>Ask a Question about Harry Potter</h2>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="query" placeholder="Ask your question..." size="60">
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if question %}
+        <p><strong>You asked:</strong> {{ question }}</p>
+    {% endif %}
+
+    {% if response %}
+        <h3>Answer:</h3>
+        <p>{{ response }}</p>
+    {% endif %}
+</body>
+</html>
